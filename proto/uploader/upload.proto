@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package uploader;
+
+// Especifica o pacote Go onde o código gerado será colocado
+option go_package = "proto/uploader;uploader";
+
+// Definindo o serviço de upload de arquivos
+service FileUploader {
+  // RPC para upload de arquivo em chunks
+  rpc Upload(stream UploadRequest) returns (UploadResponse);
+}
+
+// Mensagem para os pedidos de upload (com o nome do arquivo e chunks de dados)
+message UploadRequest {
+  string filename = 1;    // Nome do arquivo
+  bytes chunk = 2;        // Chunks de dados
+}
+
+// Mensagem para a resposta do upload
+message UploadResponse {
+  string message = 1;     // Mensagem de status
+  bool success = 2;       // Sucesso ou falha do upload
+}
